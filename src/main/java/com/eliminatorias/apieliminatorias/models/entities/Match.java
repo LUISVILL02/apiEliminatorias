@@ -1,5 +1,6 @@
 package com.eliminatorias.apieliminatorias.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-5")
     private LocalDate date;
     private String stadium;
     private String mainFerefe;

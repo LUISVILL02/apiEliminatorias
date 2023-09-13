@@ -20,4 +20,6 @@ public class Result {
     private Integer localGoal;
     private Integer numberCardRed;
     private Integer numberCardYell;
+    @OneToOne(mappedBy = "score")
+    private Match match;
 }
