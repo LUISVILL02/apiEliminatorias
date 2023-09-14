@@ -22,7 +22,11 @@ public class Team {
     private String flag;
     private String coach;
     @OneToMany(mappedBy = "localTeam")
-    private List<Match> localMatches;
+    private List<Match> localTeam;
     @OneToMany(mappedBy = "visitingTeam")
     private List<Match> visitingTeam;
+
+    public Team UpdateTeamWith(Team team){
+        return new Team(this.idTeam, this.name, this.flag, this.coach, this.localTeam, this.visitingTeam);
+    }
 }
