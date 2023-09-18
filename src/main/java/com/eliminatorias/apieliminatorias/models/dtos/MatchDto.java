@@ -1,6 +1,8 @@
 package com.eliminatorias.apieliminatorias.models.dtos;
 
 import com.eliminatorias.apieliminatorias.models.entities.Result;
+import com.eliminatorias.apieliminatorias.models.entities.Team;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +14,13 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchDto implements EntityDto{
+public class MatchDto{
     private Long id;
+    @JsonFormat(pattern = "dd/MM/yyyy",timezone = "GMT-5")
     private LocalDate date;
     private String stadium;
     private String mainFerefe;
     private Long idLocalTeam;
     private Long idVisitingTeam;
-    private Result score;
+    private Long score;
 }

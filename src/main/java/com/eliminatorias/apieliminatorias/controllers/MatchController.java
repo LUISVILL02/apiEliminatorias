@@ -17,8 +17,8 @@ public class MatchController {
     private final MatchService matchService;
 
     @PostMapping
-    public ResponseEntity<MatchDto> create(@RequestBody Match match){
-        MatchDto match1 = matchService.save(match);
+    public ResponseEntity<MatchDto> create(@RequestBody MatchDto matchDto){
+        MatchDto match1 = matchService.save(matchDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MatchService {
-    MatchDto save(Match match);
+    MatchDto save(MatchDto matchDto);
     List<MatchDto> findAllDate(LocalDate date);
     List<MatchDto> finAllName(String name);
     Optional<MatchDto> finByid(Long id);
