@@ -27,6 +27,6 @@ public class Team {
     private List<Match> visitingTeam;
 
     public Team UpdateTeamWith(Team team){
-        return new Team(this.idTeam, this.name, this.flag, this.coach, this.localTeam, this.visitingTeam);
+        return new Team(this.idTeam, team.name, team.flag, team.coach, team.localTeam, team.visitingTeam);
     }
 }

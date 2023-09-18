@@ -1,5 +1,6 @@
 package com.eliminatorias.apieliminatorias.controllers;
 
+import com.eliminatorias.apieliminatorias.models.dtos.TeamDto;
 import com.eliminatorias.apieliminatorias.models.entities.Team;
 import com.eliminatorias.apieliminatorias.services.TeamService;
 import lombok.AllArgsConstructor;
@@ -18,9 +19,9 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public ResponseEntity<?> finAll(@RequestParam String name){
+    public ResponseEntity<?> finAll(@RequestParam(required = false) String name){
         if (name != null){
-            Optional<Team> team = teamService.getTeam(name);
+            Optional<TeamDto> team = teamService.getTeam(name);
             if (team.isPresent()){
                 return new ResponseEntity<>(team.get(), HttpStatus.OK);
             }else
@@ -30,8 +31,8 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<Team> create(@RequestBody Team team){
-        Team teamCreate = teamService.create(team);
+    public ResponseEntity<TeamDto> create(@RequestBody Team team){
+        TeamDto teamCreate = teamService.create(team);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -41,19 +42,20 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Team> update(@PathVariable Long id,
+    public ResponseEntity<TeamDto> update(@PathVariable Long id,
                                        @RequestBody Team team){
-        Optional<Team> team1 = teamService.UpdateTeamById(id, team);
-        return team1.map(teamUpdate -> ResponseEntity.ok().body(teamUpdate))
-                .orElseGet(()->{
-                    Team team2 = teamService.create(team);
-                    URI location = ServletUriComponentsBuilder
-                            .fromCurrentRequest()
-                            .path("/{id}")
-                            .buildAndExpand(team2.getIdTeam())
-                            .toUri();
-                    return ResponseEntity.created(location).body(team2);
-                });
+        Optional<TeamDto> team1 = teamService.UpdateTeamById(id, team);
+        if (team1.isPresent()){
+            return ResponseEntity.ok().body(team1.get());
+        }
+        TeamDto team2 = teamService.create(team);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(team2.getIdTeam())
+                .toUri();
+        return ResponseEntity.created(location).body(team2);
     }
 
     @DeleteMapping("/{id}")

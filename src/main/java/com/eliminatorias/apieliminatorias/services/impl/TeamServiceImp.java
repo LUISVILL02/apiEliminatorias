@@ -1,7 +1,9 @@
 package com.eliminatorias.apieliminatorias.services.impl;
 
+import com.eliminatorias.apieliminatorias.models.dtos.TeamDto;
 import com.eliminatorias.apieliminatorias.models.entities.Team;
 import com.eliminatorias.apieliminatorias.models.mapper.Clonable;
+import com.eliminatorias.apieliminatorias.models.mapper.TeamMapper;
 import com.eliminatorias.apieliminatorias.repositories.TeamRepository;
 import com.eliminatorias.apieliminatorias.services.TeamService;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -16,28 +19,40 @@ public class TeamServiceImp implements TeamService {
 
     private final TeamRepository teamRepository;
     private final Clonable clonable;
+    private final TeamMapper teamMapper;
     @Override
-    public Team create(Team team) {
+    public TeamDto create(Team team) {
         Team teamCopy = clonable.teamCopy(team);
-        return teamRepository.save(teamCopy);
+        teamRepository.save(teamCopy);
+        return teamMapper.teamToTeamDto(teamCopy);
     }
 
     @Override
-    public List<Team> getTeams() {
-        return teamRepository.findAll();
+    public List<TeamDto> getTeams() {
+        List<Team> team =  teamRepository.findAll();
+        List<TeamDto> teamDto = null;
+        teamDto = team.stream().map(teamMapper::teamToTeamDto).collect(Collectors.toList());
+        return teamDto;
     }
 
     @Override
-    public Optional<Team> getTeam(String name) {
-        return teamRepository.findByName(name);
+    public Optional<TeamDto> getTeam(String name) {
+        Optional<Team> team = teamRepository.findByName(name);
+        return team.map(teamMapper::teamToTeamDto);
     }
 
     @Override
-    public Optional<Team> UpdateTeamById(Long id, Team team) {
-        return teamRepository.findById(id).map(oldTeam -> {
-            Team upDaateTeam = oldTeam.UpdateTeamWith(team);
-            return teamRepository.save(upDaateTeam);
-        });
+    public Optional<TeamDto> UpdateTeamById(Long id, Team team) {
+        Optional<Team> teamInDB = teamRepository.findById(id);
+        teamInDB.ifPresent(team1 -> System.out.println("service "+ team1.getIdTeam()));
+        if (teamInDB.isPresent()){
+            System.out.println("prueba desde el service"+ teamInDB.get());
+            Team teamCopy = teamInDB.get().UpdateTeamWith(team);
+            teamRepository.save(teamCopy);
+            return Optional.of(teamMapper.teamToTeamDto(teamCopy));
+        }
+        TeamDto teamDto = teamMapper.teamToTeamDto(teamRepository.save(team));
+        return Optional.ofNullable(teamDto);
     }
 
     @Override
