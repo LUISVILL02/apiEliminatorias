@@ -22,4 +22,9 @@ public class Result {
     private Integer numberCardYell;
     @OneToOne(mappedBy = "score")
     private Match match;
+
+    public Result updateResult(Result result){
+        return new Result(this.id, result.visitingGoal, result.localGoal,
+                result.numberCardRed, result.numberCardYell, result.match);
+    }
 }
