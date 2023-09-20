@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface MatchService {
     MatchDto save(MatchDto matchDto);
-    List<MatchDto> findAllDate(LocalDate date);
-    List<MatchDto> finAllName(String name);
+    List<MatchDto> findByDate(LocalDate date);
+    List<MatchDto> findAllName(String name);
     Optional<MatchDto> finByid(Long id);
 }
