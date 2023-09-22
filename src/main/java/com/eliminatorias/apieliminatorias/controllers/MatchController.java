@@ -1,6 +1,8 @@
 package com.eliminatorias.apieliminatorias.controllers;
 
 import com.eliminatorias.apieliminatorias.models.dtos.MatchDto;
+import com.eliminatorias.apieliminatorias.models.entities.Match;
+import com.eliminatorias.apieliminatorias.models.mapper.MatchMapper;
 import com.eliminatorias.apieliminatorias.services.MatchService;
 import lombok.AllArgsConstructor;
 
@@ -13,13 +15,14 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("apiEliminatorias/v1/Matches")
 public class MatchController {
     private final MatchService matchService;
-
+    private final MatchMapper matchMapper;
     @PostMapping
     public ResponseEntity<MatchDto> create(@RequestBody MatchDto matchDto){
         MatchDto match1 = matchService.save(matchDto);
@@ -46,6 +49,20 @@ public class MatchController {
             return new ResponseEntity<>(match, HttpStatus.OK);
         }
         return ResponseEntity.notFound().build();
-      } 
+      }
+
+      @PatchMapping("/{id}")
+      public ResponseEntity<MatchDto> update(@PathVariable Long id, @RequestBody MatchDto match){
+        Optional<MatchDto> matchFind = matchService.update(id, match);
+        if (matchFind.isPresent()){
+            return ResponseEntity.ok().body(matchFind.get());
+        }
+          URI location = ServletUriComponentsBuilder
+                  .fromCurrentRequest()
+                  .path("/{id}")
+                  .buildAndExpand(matchFind.get().getId())
+                  .toUri();
+        return ResponseEntity.created(location).body(matchFind.get());
+      }
 
 }

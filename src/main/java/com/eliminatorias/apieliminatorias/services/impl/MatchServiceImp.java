@@ -61,4 +61,15 @@ public class MatchServiceImp implements MatchService {
         }
         return match.map(matchMapper::matchToMatchDto);
     }
+
+    @Override
+    public Optional<MatchDto> update(Long id, MatchDto match) {
+        Optional<Match> matchfind = matchRepository.findById(id);
+        if (matchfind.isPresent()){
+            Match matchUpdate = matchfind.get().updateMatch(matchMapper.matchDtoToMatch(match));
+            matchRepository.save(matchUpdate);
+            return Optional.of(matchMapper.matchToMatchDto(matchUpdate));
+        }
+        return Optional.ofNullable(matchMapper.matchToMatchDto(matchfind.get()));
+    }
 }
