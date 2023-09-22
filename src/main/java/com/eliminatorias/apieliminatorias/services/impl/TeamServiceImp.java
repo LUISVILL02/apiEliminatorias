@@ -1,5 +1,6 @@
 package com.eliminatorias.apieliminatorias.services.impl;
 
+import com.eliminatorias.apieliminatorias.exceptions.teamExcept.TeamNoFoundExcep;
 import com.eliminatorias.apieliminatorias.models.dtos.TeamDto;
 import com.eliminatorias.apieliminatorias.models.entities.Team;
 import com.eliminatorias.apieliminatorias.models.mapper.Clonable;
@@ -38,15 +39,16 @@ public class TeamServiceImp implements TeamService {
     @Override
     public Optional<TeamDto> getTeam(String name) {
         Optional<Team> team = teamRepository.findByName(name);
+        if (team.isEmpty()){
+            throw new TeamNoFoundExcep("No se encontro el equipo con nombre: "+ name);
+        }
         return team.map(teamMapper::teamToTeamDto);
     }
 
     @Override
     public Optional<TeamDto> UpdateTeamById(Long id, Team team) {
         Optional<Team> teamInDB = teamRepository.findById(id);
-        teamInDB.ifPresent(team1 -> System.out.println("service "+ team1.getIdTeam()));
         if (teamInDB.isPresent()){
-            System.out.println("prueba desde el service"+ teamInDB.get());
             Team teamCopy = teamInDB.get().UpdateTeamWith(team);
             teamRepository.save(teamCopy);
             return Optional.of(teamMapper.teamToTeamDto(teamCopy));

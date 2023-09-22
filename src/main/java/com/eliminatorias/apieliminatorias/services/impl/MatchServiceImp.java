@@ -26,13 +26,16 @@ public class MatchServiceImp implements MatchService {
     @Override
     public MatchDto save(MatchDto matchDto) {
         Match match = matchMapper.matchDtoToMatch(matchDto);
-        System.out.println(match.getStadium());
         return matchMapper.matchToMatchDto(matchRepository.save(match));
     }
 
     @Override
     public List<MatchDto> findByDate(LocalDate date) {
-        List<Match> matchList = matchRepository.findByDate(date);
+        List<Match> matchList = matchRepository.findAllByDate(date);
+        if (matchList.isEmpty()){
+            throw new RuntimeException("No se encontraron partidos para la fecha: "+ date);
+        }
+      
         List<MatchDto> matchDtoList = null;
         matchDtoList = matchList.stream().map(matchMapper::matchToMatchDto).collect(Collectors.toList());
         return matchDtoList;
@@ -49,6 +52,9 @@ public class MatchServiceImp implements MatchService {
     @Override
     public Optional<MatchDto> finByid(Long id) {
         Optional<Match> match = matchRepository.findById(id);
+        if (match.isEmpty()){
+            throw new RuntimeException("sin resultados para el partido con id: "+ id);
+        }
         return match.map(matchMapper::matchToMatchDto);
     }
 }
