@@ -1,5 +1,6 @@
 package com.eliminatorias.apieliminatorias.services.impl;
 
+import com.eliminatorias.apieliminatorias.exceptions.matchExcept.MatchNoFoundExceptByDate;
 import com.eliminatorias.apieliminatorias.models.dtos.MatchDto;
 import com.eliminatorias.apieliminatorias.models.dtos.ResulDto;
 import com.eliminatorias.apieliminatorias.models.entities.Match;
@@ -31,9 +32,9 @@ public class MatchServiceImp implements MatchService {
 
     @Override
     public List<MatchDto> findByDate(LocalDate date) {
-        List<Match> matchList = matchRepository.findAllByDate(date);
+        List<Match> matchList = matchRepository.findByDate(date);
         if (matchList.isEmpty()){
-            throw new RuntimeException("No se encontraron partidos para la fecha: "+ date);
+            throw new MatchNoFoundExceptByDate("No se encontraron partidos para la fecha: "+ date);
         }
       
         List<MatchDto> matchDtoList = null;
@@ -44,6 +45,9 @@ public class MatchServiceImp implements MatchService {
     @Override
     public List<MatchDto> findAllName(String name) {
         List<Match> matchList = matchRepository.findByName(name);
+        if (matchList.isEmpty()){
+            throw new MatchNoFoundExceptByDate("No se encontraron partidos para el equipo: "+ name);
+        }
         List<MatchDto> matchDtoList = null;
         matchDtoList = matchList.stream().map(matchMapper::matchToMatchDto).collect(Collectors.toList());
         return matchDtoList;
