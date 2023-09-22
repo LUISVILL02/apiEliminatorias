@@ -32,4 +32,9 @@ public class Match {
     @OneToOne(optional = false)
     @JoinColumn(name = "id_score", referencedColumnName = "id")
     private Result score;
+
+    public Match updateMatch(Match match){
+        return new Match(this.id, match.date, match.stadium, match.mainFerefe,
+                match.localTeam, match.visitingTeam, match.score);
+    }
 }
