@@ -1,7 +1,6 @@
 package com.eliminatorias.apieliminatorias.controllers;
 
 import com.eliminatorias.apieliminatorias.models.dtos.MatchDto;
-import com.eliminatorias.apieliminatorias.models.entities.Match;
 import com.eliminatorias.apieliminatorias.services.MatchService;
 import lombok.AllArgsConstructor;
 
@@ -12,8 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -33,17 +32,15 @@ public class MatchController {
     }
 
      @GetMapping 
-     public ResponseEntity<List<MatchDto>> FindByDate(@RequestParam(required = false) String date){
-        LocalDate localDate = LocalDate.parse(date);
-        if(localDate != null){
-            List<MatchDto> match = matchService.findByDate(localDate);
-                return new ResponseEntity<>(match ,HttpStatus.OK);
-        }
-        return ResponseEntity.notFound().build();
+     public ResponseEntity<List<MatchDto>> getByDate(@RequestParam(required = false) String date){
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        List<MatchDto> match = matchService.findByDate(localDate);
+        return new ResponseEntity<>(match ,HttpStatus.OK);
      }
      
-      @GetMapping
-      public ResponseEntity<List<MatchDto>> FindAllName(@RequestParam(required = false) String name){
+      @GetMapping("/byName")
+      public ResponseEntity<List<MatchDto>> getByName(@RequestParam(required = false) String name){
         if(name != null){
             List<MatchDto> match = matchService.findAllName(name);
             return new ResponseEntity<>(match, HttpStatus.OK);
