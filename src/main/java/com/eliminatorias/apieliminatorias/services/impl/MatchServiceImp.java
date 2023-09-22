@@ -30,19 +30,20 @@ public class MatchServiceImp implements MatchService {
     }
 
     @Override
-    public List<MatchDto> findAllDate(LocalDate date) {
+    public List<MatchDto> findByDate(LocalDate date) {
         List<Match> matchList = matchRepository.findAllByDate(date);
         if (matchList.isEmpty()){
             throw new RuntimeException("No se encontraron partidos para la fecha: "+ date);
         }
+      
         List<MatchDto> matchDtoList = null;
         matchDtoList = matchList.stream().map(matchMapper::matchToMatchDto).collect(Collectors.toList());
         return matchDtoList;
     }
 
     @Override
-    public List<MatchDto> finAllName(String name) {
-        List<Match> matchList = matchRepository.findAllByName(name);
+    public List<MatchDto> findAllName(String name) {
+        List<Match> matchList = matchRepository.findByName(name);
         List<MatchDto> matchDtoList = null;
         matchDtoList = matchList.stream().map(matchMapper::matchToMatchDto).collect(Collectors.toList());
         return matchDtoList;
