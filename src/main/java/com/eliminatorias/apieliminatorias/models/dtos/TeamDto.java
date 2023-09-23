@@ -18,6 +18,4 @@ public class TeamDto {
     private String name;
     private String flag;
     private String coach;
-    private List<MatchDto> localTeam;
-    private List<MatchDto> visitingTeam;
 }

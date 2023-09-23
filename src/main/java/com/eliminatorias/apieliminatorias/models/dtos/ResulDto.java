@@ -16,6 +16,5 @@ public class ResulDto {
     private Integer localGoal;
     private Integer numberCardRed;
     private Integer numberCardYell;
-    @JsonIgnore
-    private MatchDto match;
+
 }

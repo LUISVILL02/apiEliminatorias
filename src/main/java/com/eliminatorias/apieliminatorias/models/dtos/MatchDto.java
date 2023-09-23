@@ -1,7 +1,5 @@
 package com.eliminatorias.apieliminatorias.models.dtos;
 
-import com.eliminatorias.apieliminatorias.models.entities.Result;
-import com.eliminatorias.apieliminatorias.models.entities.Team;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +20,5 @@ public class MatchDto{
     private String mainFerefe;
     private Long idLocalTeam;
     private Long idVisitingTeam;
-    private Long score;
+    private ResulDto score;
 }
