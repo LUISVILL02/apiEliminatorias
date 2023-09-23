@@ -18,10 +18,18 @@ import java.time.LocalDate;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @Size(min = 1)
     private Long id;
+
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-5")
+    @NotBlank(message = "the date can't be a empty")
     private LocalDate date;
+
+    @NotBlank(message = "The stadium should have a name")
     private String stadium;
+
+    @NotBlank(message = "The mainFerefe cannot be a empty")
     private String mainFerefe;
     @ManyToOne
     @JoinColumn(name = "idLocalTeam")

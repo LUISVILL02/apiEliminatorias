@@ -15,10 +15,19 @@ import lombok.Setter;
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Size(min = 1)
     private Long id;
+
+    @PositiveOrZero 
     private Integer visitingGoal;
+
+    @PositiveOrZero 
     private Integer localGoal;
+
+    @PositiveOrZero 
     private Integer numberCardRed;
+
+    @PositiveOrZero 
     private Integer numberCardYell;
     @OneToOne(mappedBy = "score")
     private Match match;

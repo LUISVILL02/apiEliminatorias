@@ -19,12 +19,13 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
+@validated
 @RequestMapping("apiEliminatorias/v1/Matches")
 public class MatchController {
     private final MatchService matchService;
     private final MatchMapper matchMapper;
     @PostMapping
-    public ResponseEntity<MatchDto> create(@RequestBody MatchDto matchDto){
+    public ResponseEntity<MatchDto> create(@RequestBody @valid MatchDto matchDto){
         MatchDto match1 = matchService.save(matchDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -35,7 +36,7 @@ public class MatchController {
     }
 
      @GetMapping 
-     public ResponseEntity<List<MatchDto>> getByDate(@RequestParam(required = false) String date){
+     public ResponseEntity<List<MatchDto>> getByDate(@RequestParam(required = false) @NotBlank String date){
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(date, formatter);
         List<MatchDto> match = matchService.findByDate(localDate);
@@ -43,7 +44,7 @@ public class MatchController {
      }
      
       @GetMapping("/byName")
-      public ResponseEntity<List<MatchDto>> getByName(@RequestParam(required = false) String name){
+      public ResponseEntity<List<MatchDto>> getByName(@RequestParam(required = false) @NotBlank String name){
         if(name != null){
             List<MatchDto> match = matchService.findAllName(name);
             return new ResponseEntity<>(match, HttpStatus.OK);
@@ -52,7 +53,7 @@ public class MatchController {
       }
 
       @PatchMapping("/{id}")
-      public ResponseEntity<MatchDto> update(@PathVariable Long id, @RequestBody MatchDto match){
+      public ResponseEntity<MatchDto> update(@PathVariable @min(1)Long id, @RequestBody @valid MatchDto match){
         Optional<MatchDto> matchFind = matchService.update(id, match);
         if (matchFind.isPresent()){
             return ResponseEntity.ok().body(matchFind.get());

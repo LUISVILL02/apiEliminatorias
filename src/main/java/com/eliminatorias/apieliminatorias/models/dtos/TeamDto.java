@@ -14,8 +14,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamDto {
+
+
     private Long idTeam;
+
+    @NotBlank(message = "the name cannot be empty")
     private String name;
+
+    @NotBlank(message = "There are should be a URL")
     private String flag;
+
+    @NotBlank(message = "The coach name cannot be blank")
     private String coach;
 }
