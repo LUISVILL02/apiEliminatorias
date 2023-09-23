@@ -11,10 +11,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResulDto {
+
+ 
     private Long id;
+
+    @PositiveOrZero
     private Integer visitingGoal;
+
+    @PositiveOrZero
     private Integer localGoal;
+
+    @PositiveOrZero
     private Integer numberCardRed;
+
+    @PositiveOrZero
     private Integer numberCardYell;
 
 }

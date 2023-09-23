@@ -17,9 +17,16 @@ import java.util.List;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Size(min = 1)
     private Long idTeam;
+
+    @NotBlank(message = "The name cannot be empty")
     private String name;
+
+    @NotBlank(message = "There are be a URL")
     private String flag;
+
+    @NotBlank(message = "The coach name cannot be empty")
     private String coach;
     @OneToMany(mappedBy = "localTeam")
     private List<Match> localTeam;

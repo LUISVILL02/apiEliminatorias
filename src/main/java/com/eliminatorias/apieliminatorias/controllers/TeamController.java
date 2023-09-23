@@ -14,12 +14,13 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
+@validated
 @RequestMapping("apiEliminatorias/v1/Teams")
 public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public ResponseEntity<?> finAll(@RequestParam(required = false) String name){
+    public ResponseEntity<?> finAll(@RequestParam(required = false) @NotBlank String name){
         if (name != null){
             Optional<TeamDto> team = teamService.getTeam(name);
             if (team.isPresent()){
@@ -31,7 +32,7 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<TeamDto> create(@RequestBody Team team){
+    public ResponseEntity<TeamDto> create(@RequestBody @valid Team team){
         TeamDto teamCreate = teamService.create(team);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -42,8 +43,8 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamDto> update(@PathVariable Long id,
-                                       @RequestBody Team team){
+    public ResponseEntity<TeamDto> update(@PathVariable @min(1)Long id,
+                                       @RequestBody @valid Team team){
         Optional<TeamDto> team1 = teamService.UpdateTeamById(id, team);
         if (team1.isPresent()){
             return ResponseEntity.ok().body(team1.get());
@@ -59,7 +60,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Team> delete(@PathVariable Long id){
+    public ResponseEntity<Team> delete(@PathVariable @min(1)Long id){
         teamService.delete(id);
         return ResponseEntity.noContent().build();
     }
