@@ -1,6 +1,8 @@
 package com.eliminatorias.apieliminatorias.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ public class Result {
     @Size(min = 1)
     private Long id;
 
-    @PositiveOrZero 
+    @PositiveOrZero
     private Integer visitingGoal;
 
     @PositiveOrZero 

@@ -3,8 +3,11 @@ package com.eliminatorias.apieliminatorias.controllers;
 import com.eliminatorias.apieliminatorias.models.dtos.ResulDto;
 import com.eliminatorias.apieliminatorias.models.entities.Result;
 import com.eliminatorias.apieliminatorias.services.ResultService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -13,13 +16,13 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@validated
+@Validated
 @RequestMapping("/api/v1/results")
 public class ResultController {
     private final ResultService resultService;
 
     @PostMapping
-    public ResponseEntity<ResulDto> create(@RequestBody @valid Result result){
+    public ResponseEntity<ResulDto> create(@RequestBody @Valid Result result){
         ResulDto resultCreate = resultService.create(result);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -30,8 +33,8 @@ public class ResultController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResulDto> updateResult(@PathVariable @min(1)Long id,
-                                               @RequestBody @valid Result result){
+    public ResponseEntity<ResulDto> updateResult(@PathVariable @Min(1) Long id,
+                                               @RequestBody @Valid Result result){
         Optional<ResulDto> result1 = resultService.update(id, result);
         return result1.map(resultUpdate -> ResponseEntity.ok().body(resultUpdate))
                         .orElseGet(()->{

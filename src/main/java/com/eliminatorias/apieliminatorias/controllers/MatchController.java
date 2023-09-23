@@ -4,10 +4,14 @@ import com.eliminatorias.apieliminatorias.models.dtos.MatchDto;
 import com.eliminatorias.apieliminatorias.models.entities.Match;
 import com.eliminatorias.apieliminatorias.models.mapper.MatchMapper;
 import com.eliminatorias.apieliminatorias.services.MatchService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -19,13 +23,13 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@validated
+@Validated
 @RequestMapping("apiEliminatorias/v1/Matches")
 public class MatchController {
     private final MatchService matchService;
     private final MatchMapper matchMapper;
     @PostMapping
-    public ResponseEntity<MatchDto> create(@RequestBody @valid MatchDto matchDto){
+    public ResponseEntity<MatchDto> create(@RequestBody @Valid MatchDto matchDto){
         MatchDto match1 = matchService.save(matchDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -53,7 +57,7 @@ public class MatchController {
       }
 
       @PatchMapping("/{id}")
-      public ResponseEntity<MatchDto> update(@PathVariable @min(1)Long id, @RequestBody @valid MatchDto match){
+      public ResponseEntity<MatchDto> update(@PathVariable @Min(1) Long id, @RequestBody @Valid MatchDto match){
         Optional<MatchDto> matchFind = matchService.update(id, match);
         if (matchFind.isPresent()){
             return ResponseEntity.ok().body(matchFind.get());
