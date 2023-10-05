@@ -24,7 +24,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @Validated
-@RequestMapping("apiEliminatorias/v1/Matches")
+@RequestMapping("/apiEliminatorias/v1/Matches")
 public class MatchController {
     private final MatchService matchService;
     private final MatchMapper matchMapper;
