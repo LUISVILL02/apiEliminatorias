@@ -29,30 +29,6 @@ public class WebSecuriryConfig {
 
     private final UserDetailsServiceImp userDetailsService;
 
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-            http
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .exceptionHandling((exception) -> exception
-                    .authenticationEntryPoint(authHandlerEntryPont)
-                )
-                .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/apiEliminatorias/v1/Matches/**").permitAll()
-                        .requestMatchers("/apiEliminatorias/v1/results/**").permitAll()
-                        .requestMatchers("/apiEliminatorias/v1/Teams/**").permitAll()
-                        .requestMatchers("/apieliminatorias/v1/auth/**").permitAll()
-                        .anyRequest().authenticated()
-
-                );
-                http.authenticationProvider(authenticationProvider());
-                http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
@@ -75,5 +51,28 @@ public class WebSecuriryConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+            http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .exceptionHandling((exception) -> exception
+                    .authenticationEntryPoint(authHandlerEntryPont)
+                )
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/apiEliminatorias/v1/Matches/**").permitAll()
+                        .requestMatchers("/apiEliminatorias/v1/results/**").permitAll()
+                        .requestMatchers("/apiEliminatorias/v1/Teams/**").permitAll()
+                        .requestMatchers("/apieliminatorias/v1/auth/**").permitAll()
+                        .anyRequest().authenticated()
+
+                );
+                http.authenticationProvider(authenticationProvider());
+                http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
 }

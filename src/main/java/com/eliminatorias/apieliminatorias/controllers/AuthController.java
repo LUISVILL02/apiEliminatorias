@@ -21,6 +21,7 @@ public class AuthController {
 
     @PostMapping ("/login")
     public ResponseEntity<ResponseJwt> login(@RequestBody Login login){
+        System.out.println("login: "+login.getEmail());
         return new ResponseEntity<>(auth.login(login), HttpStatus.OK);
     }
     @PostMapping ("/signup")
