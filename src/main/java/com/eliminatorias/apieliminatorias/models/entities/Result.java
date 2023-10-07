@@ -17,7 +17,6 @@ import lombok.Setter;
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Size(min = 1)
     private Long id;
 
     @PositiveOrZero
