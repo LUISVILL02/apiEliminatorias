@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,6 +30,7 @@ public class MatchController {
     private final MatchService matchService;
     private final MatchMapper matchMapper;
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MatchDto> create(@RequestBody @Valid MatchDto matchDto){
         MatchDto match1 = matchService.save(matchDto);
         URI location = ServletUriComponentsBuilder
@@ -57,6 +59,7 @@ public class MatchController {
       }
 
       @PatchMapping("/{id}")
+      @PreAuthorize("hasRole('ADMIN')")
       public ResponseEntity<MatchDto> update(@PathVariable @Min(1) Long id, @RequestBody @Valid MatchDto match){
         Optional<MatchDto> matchFind = matchService.update(id, match);
         if (matchFind.isPresent()){

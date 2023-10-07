@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,6 +36,7 @@ public class TeamController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TeamDto> create(@RequestBody @Valid Team team){
         TeamDto teamCreate = teamService.create(team);
         URI location = ServletUriComponentsBuilder
@@ -46,6 +48,7 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TeamDto> update(@PathVariable @Min(1) Long id,
                                        @RequestBody @Valid Team team){
         Optional<TeamDto> team1 = teamService.UpdateTeamById(id, team);
@@ -63,6 +66,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Team> delete(@PathVariable @Min(1) Long id){
         teamService.delete(id);
         return ResponseEntity.noContent().build();

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -22,6 +23,7 @@ public class ResultController {
     private final ResultService resultService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResulDto> create(@RequestBody @Valid Result result){
         ResulDto resultCreate = resultService.create(result);
         URI location = ServletUriComponentsBuilder
@@ -33,6 +35,7 @@ public class ResultController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResulDto> updateResult(@PathVariable @Min(1) Long id,
                                                @RequestBody @Valid Result result){
         Optional<ResulDto> result1 = resultService.update(id, result);

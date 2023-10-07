@@ -33,7 +33,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 4, max = 20, message = "La contraseña debe tener entre 4 y 20 caracteres")
+    @Size(min = 4, max = 200, message = "La contraseña debe tener entre 4 y 20 caracteres")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -41,4 +41,9 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    public User(String username, String email, String password) {
+        this.userName = username;
+        this.email = email;
+        this.password = password;
+    }
 }
