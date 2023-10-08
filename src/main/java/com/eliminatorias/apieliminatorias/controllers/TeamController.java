@@ -24,6 +24,7 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> finAll(@RequestParam(required = false) String name){
         if (name != null){
             Optional<TeamDto> team = teamService.getTeam(name);

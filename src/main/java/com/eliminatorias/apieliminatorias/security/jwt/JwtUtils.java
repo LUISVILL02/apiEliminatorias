@@ -24,8 +24,6 @@ public class JwtUtils {
 
     public String generateAccestoken(Authentication authentication){
         UserDetailsImp userPrincipal = (UserDetailsImp) authentication.getPrincipal();
-        System.out.println("userPrincipal: "+userPrincipal.getEmail());
-            //no genera el token areglar despues
         return Jwts.builder()
                 .setSubject((userPrincipal.getEmail()))
                 .setIssuedAt(new Date())
@@ -34,8 +32,7 @@ public class JwtUtils {
                 .compact();
     }
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret)
-                .parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {

@@ -41,9 +41,7 @@ public class AuthImp implements Auth {
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println("autenticado");
         String jwt = jwtUtils.generateAccestoken(authentication);
-        System.out.println("jwt "+ jwt);
 
         UserDetailsImp userDetails = (UserDetailsImp) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()

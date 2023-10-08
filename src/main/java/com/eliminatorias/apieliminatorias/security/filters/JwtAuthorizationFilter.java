@@ -32,10 +32,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         try {
             String jwt = parseJwt(request);
-            System.out.println("jwt antes del if: "+jwt+" ");
             if(jwt != null && jwtUtils.validateJwtToken(jwt)){
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                System.out.println("jwt despues del if: "+jwt+" username: "+username);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
