@@ -10,6 +10,7 @@ public interface TeamService {
     TeamDto create(Team team);
     List<TeamDto> getTeams();
     Optional<TeamDto> getTeam(String name);
+    Optional<TeamDto> getTeamById(Long id);
     Optional<TeamDto> UpdateTeamById(Long id, Team team);
     void delete(Long id);
 }

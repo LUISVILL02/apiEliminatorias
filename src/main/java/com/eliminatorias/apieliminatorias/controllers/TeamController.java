@@ -36,6 +36,15 @@ public class TeamController {
         return new ResponseEntity<>(teamService.getTeams(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamDto> findById(@PathVariable @Min(1) Long id){
+        Optional<TeamDto> team = teamService.getTeamById(id);
+        if (team.isPresent()){
+            return ResponseEntity.ok().body(team.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TeamDto> create(@RequestBody @Valid Team team){

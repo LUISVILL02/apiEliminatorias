@@ -5,13 +5,11 @@ import com.eliminatorias.apieliminatorias.models.dtos.ResponseJwt;
 import com.eliminatorias.apieliminatorias.models.dtos.Signup;
 import com.eliminatorias.apieliminatorias.services.Auth;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -21,8 +19,12 @@ public class AuthController {
 
     @PostMapping ("/login")
     public ResponseEntity<ResponseJwt> login(@RequestBody Login login){
-        System.out.println("login: "+login.getEmail());
-        return new ResponseEntity<>(auth.login(login), HttpStatus.OK);
+        try {
+            ResponseJwt responseJwt = auth.login(login);
+            return new ResponseEntity<>(responseJwt, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
     @PostMapping ("/signup")
     public ResponseEntity<String> signup(@RequestBody Signup signup){

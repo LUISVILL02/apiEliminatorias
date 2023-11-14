@@ -40,8 +40,12 @@ public class MatchController {
                 .toUri();
         return ResponseEntity.created(location).body(match1);
     }
-
-     @GetMapping 
+    @GetMapping
+    public ResponseEntity<List<MatchDto>> getAll(){
+        List<MatchDto> match = matchService.findAll();
+        return new ResponseEntity<>(match, HttpStatus.OK);
+    }
+     @GetMapping ("/fecha")
      public ResponseEntity<List<MatchDto>> getByDate(@RequestParam(required = false) @NotBlank String date){
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(date, formatter);

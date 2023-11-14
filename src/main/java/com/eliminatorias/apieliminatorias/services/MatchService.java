@@ -12,5 +12,6 @@ public interface MatchService {
     List<MatchDto> findByDate(LocalDate date);
     List<MatchDto> findAllName(String name);
     Optional<MatchDto> finByid(Long id);
+    List<MatchDto> findAll();
     Optional<MatchDto> update(Long id, MatchDto match);
 }

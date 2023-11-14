@@ -63,6 +63,11 @@ public class MatchServiceImp implements MatchService {
     }
 
     @Override
+    public List<MatchDto> findAll() {
+        return matchRepository.findAll().stream().map(matchMapper::matchToMatchDto).collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<MatchDto> update(Long id, MatchDto match) {
         Optional<Match> matchfind = matchRepository.findById(id);
         if (matchfind.isPresent()){

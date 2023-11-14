@@ -19,7 +19,6 @@ import java.util.List;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Size(min = 1)
     private Long idTeam;
 
     @NotBlank(message = "The name cannot be empty")

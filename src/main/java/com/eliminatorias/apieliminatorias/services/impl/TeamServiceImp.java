@@ -37,6 +37,15 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
+    public Optional<TeamDto> getTeamById(Long id) {
+        Optional<Team> team = teamRepository.findById(id);
+        if (team.isPresent()){
+            return team.map(teamMapper::teamToTeamDto);
+        }
+        throw new TeamNoFoundExcep("No se encontro el equipo con id: "+ id);
+    }
+
+    @Override
     public Optional<TeamDto> getTeam(String name) {
         Optional<Team> team = teamRepository.findByName(name);
         if (team.isEmpty()){

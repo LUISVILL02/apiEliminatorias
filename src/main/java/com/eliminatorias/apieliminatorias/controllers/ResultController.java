@@ -18,7 +18,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @Validated
-@RequestMapping("/api/v1/results")
+@RequestMapping("/apiEliminatorias/v1/results")
 public class ResultController {
     private final ResultService resultService;
 
