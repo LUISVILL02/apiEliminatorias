@@ -3,6 +3,7 @@ package com.eliminatorias.apieliminatorias.models.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,12 +21,10 @@ import java.time.LocalDate;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    @Size(min = 1)
     private Long id;
 
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-5")
-    @NotBlank(message = "the date can't be a empty")
+    @NotNull(message = "the date can't be a empty")
     private LocalDate date;
 
     @NotBlank(message = "The stadium should have a name")

@@ -14,5 +14,6 @@ public interface MatchMapper {
             @Mapping(source = "visitingTeam.idTeam", target = "idVisitingTeam")
     })
     MatchDto matchToMatchDto(Match match);
+    @InheritInverseConfiguration
     Match matchDtoToMatch(MatchDto matchDto);
 }

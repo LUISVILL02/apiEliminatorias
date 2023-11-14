@@ -2,6 +2,7 @@ package com.eliminatorias.apieliminatorias.models.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class MatchDto{
    
     private Long id;
     @JsonFormat(pattern = "dd/MM/yyyy",timezone = "GMT-5")
-    @NotBlank(message = "The date cannot be empty")
+    @NotNull(message = "The date cannot be empty")
     private LocalDate date;
 
     @NotBlank(message = "The stadium name cannot be empty ")
