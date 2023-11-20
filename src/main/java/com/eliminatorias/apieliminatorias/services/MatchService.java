@@ -2,6 +2,7 @@ package com.eliminatorias.apieliminatorias.services;
 
 import com.eliminatorias.apieliminatorias.models.dtos.MatchDto;
 import com.eliminatorias.apieliminatorias.models.entities.Match;
+import org.springframework.data.web.JsonPath;
 
 import java.time.LocalDate;
 import java.util.List;

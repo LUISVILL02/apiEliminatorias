@@ -26,7 +26,7 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping ("/signup")
+    @PostMapping ("/singup")
     public ResponseEntity<String> signup(@RequestBody Signup signup){
         return new ResponseEntity<>(auth.signup(signup), HttpStatus.OK);
     }

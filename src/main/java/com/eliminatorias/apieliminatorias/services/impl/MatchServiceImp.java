@@ -10,6 +10,7 @@ import com.eliminatorias.apieliminatorias.models.mapper.MatchMapper;
 import com.eliminatorias.apieliminatorias.models.mapper.ResultMapper;
 import com.eliminatorias.apieliminatorias.repositories.MatchRepository;
 import com.eliminatorias.apieliminatorias.services.MatchService;
+import com.eliminatorias.apieliminatorias.services.ResultService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,9 @@ import java.util.stream.Collectors;
 @Service
 public class MatchServiceImp implements MatchService {
     private final MatchRepository matchRepository;
+    private final ResultService resultService;
     private final MatchMapper matchMapper;
+    private final ResultMapper resultMapper;
 
     @Override
     public MatchDto save(MatchDto matchDto) {
@@ -70,11 +73,23 @@ public class MatchServiceImp implements MatchService {
     @Override
     public Optional<MatchDto> update(Long id, MatchDto match) {
         Optional<Match> matchfind = matchRepository.findById(id);
-        if (matchfind.isPresent()){
-            Match matchUpdate = matchfind.get().updateMatch(matchMapper.matchDtoToMatch(match));
-            matchRepository.save(matchUpdate);
-            return Optional.of(matchMapper.matchToMatchDto(matchUpdate));
+        if (matchfind.isEmpty()){
+            throw new RuntimeException("No se encontro el partido con id: "+ id);
         }
-        return Optional.ofNullable(matchMapper.matchToMatchDto(matchfind.get()));
+        MatchDto match1 = matchMapper.matchToMatchDto(matchfind.get());
+        match1.setDate(match.getDate());
+        match1.setStadium(match.getStadium());
+        match1.setMainFerefe(match.getMainFerefe());
+        match1.setIdLocalTeam(match.getIdLocalTeam());
+        match1.setIdVisitingTeam(match.getIdVisitingTeam());
+
+        ResulDto resulDto = match.getScore();
+
+        Optional<ResulDto> result = resultService.update(match1.getScore().getId(), resultMapper.resultDtoToResult(resulDto));
+
+        match1.setScore(result.get());
+
+
+        return Optional.of(matchMapper.matchToMatchDto(matchRepository.save(matchMapper.matchDtoToMatch(match1))));
     }
 }

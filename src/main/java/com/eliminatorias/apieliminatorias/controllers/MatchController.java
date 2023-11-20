@@ -66,15 +66,13 @@ public class MatchController {
       @PreAuthorize("hasRole('ADMIN')")
       public ResponseEntity<MatchDto> update(@PathVariable @Min(1) Long id, @RequestBody @Valid MatchDto match){
         Optional<MatchDto> matchFind = matchService.update(id, match);
-        if (matchFind.isPresent()){
-            return ResponseEntity.ok().body(matchFind.get());
-        }
           URI location = ServletUriComponentsBuilder
                   .fromCurrentRequest()
                   .path("/{id}")
                   .buildAndExpand(matchFind.get().getId())
                   .toUri();
-        return ResponseEntity.created(location).body(matchFind.get());
+          return matchFind.map(matchDto -> ResponseEntity.created(location).body(matchDto)).orElseGet(() -> ResponseEntity.badRequest().body(null));
+
       }
 
 }
