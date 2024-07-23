@@ -16,14 +16,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: set up java 17
+
+      - name: set up java 17 y maven
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-      - name: Set up Maven
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'apache-maven'
+          distribution: 'adopt-openjdk'
           maven-version: '3.8.6'
       - name: Build with Maven
         run: mvn clean package
