@@ -17,15 +17,14 @@ jobs:
       DB_URL_PROD: jdbc:postgresql://dpg-cqf839ogph6c73b96o8g-a.ohio-postgres.render.com/eliminatoriasdb
       DB_USER_PROD: luisivill
       DB_PASS_PROD: JAbTXAOF1h6Nb0t4js0LTLAuRnTsCWjl
+      SECRET_KEY_FUT: mipalabrasecreta
     steps:
       - name: Environment
         run: |
           echo "DB_URL_PROD=$DB_URL_PROD"
           echo "DB_USER_PROD=$DB_USER_PROD"
           echo "DB_PASS_PROD=$DB_PASS_PROD"
-          printenv | grep DB_URL_PROD
-          printenv | grep DB_USER_PROD
-          printenv | grep DB_PASS_PROD
+          echo "SECRET_KEY_FUT=$SECRET_KEY_FUT"
 
       - name: Checkout repository
         uses: actions/checkout@v2
