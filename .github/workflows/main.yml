@@ -5,6 +5,7 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/main.yml'
+      - ./Dockerfile
   pull_request:
     branches: [master]
     paths:
