@@ -17,8 +17,10 @@ jobs:
       BD_URL_PROD: ${{ secrets.BD_URL_PROD }}
       DB_USER_PROD: ${{ secrets.DB_USER_PROD }}
       DB_PASS_PROD: ${{ secrets.DB_PASS_PROD }}
-    run: echo ${{ env.DB_PASS_PROD }} ${{ env.DB_USER_PROD }} ${{ env.BD_URL_PROD }}
     steps:
+      - name: Environment
+        run: echo ${{ env.DB_PASS_PROD }} ${{ env.DB_USER_PROD }} ${{ env.BD_URL_PROD }}
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
