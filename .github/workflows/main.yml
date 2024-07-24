@@ -67,14 +67,3 @@ jobs:
           tags: luisvill/apieliminatoria:latest
           context: .
           file: Dockerfile
-  Deploy:
-    runs-on: ubuntu-latest
-    needs: Build-docker
-    steps:
-      - name: Deploy to Render
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        run: |
-          curl -fsSL https://render.com/cli/install | bash
-          render login -t ${{ env.RENDER_API_KEY }}
-          render deploy --service-name apiEliminatoria docker.io/luisvill/apieliminatoria:latest
