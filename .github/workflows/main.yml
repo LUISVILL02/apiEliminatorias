@@ -14,16 +14,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      BD_URL_PROD: ${{ secrets.BD_URL_PROD }}
+      DB_URL_PROD: ${{ secrets.DB_URL_PROD }}
       DB_USER_PROD: ${{ secrets.DB_USER_PROD }}
       DB_PASS_PROD: ${{ secrets.DB_PASS_PROD }}
     steps:
       - name: Environment
         run: |
-          echo "BD_URL_PROD=$BD_URL_PROD"
+          echo "DB_URL_PROD=$DB_URL_PROD"
           echo "DB_USER_PROD=$DB_USER_PROD"
           echo "DB_PASS_PROD=$DB_PASS_PROD"
-          printenv | grep BD_URL_PROD
+          printenv | grep DB_URL_PROD
           printenv | grep DB_USER_PROD
           printenv | grep DB_PASS_PROD
 
