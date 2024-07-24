@@ -14,9 +14,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DB_URL_PROD: ${{ secrets.DB_URL_PROD }}
-      DB_USER_PROD: ${{ secrets.DB_USER_PROD }}
-      DB_PASS_PROD: ${{ secrets.DB_PASS_PROD }}
+      DB_URL_PROD: jdbc:postgresql://dpg-cqf839ogph6c73b96o8g-a.ohio-postgres.render.com/eliminatoriasdb
+      DB_USER_PROD: luisivill
+      DB_PASS_PROD: JAbTXAOF1h6Nb0t4js0LTLAuRnTsCWjl
     steps:
       - name: Environment
         run: |
