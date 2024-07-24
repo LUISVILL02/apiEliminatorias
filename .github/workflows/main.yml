@@ -13,6 +13,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BD_URL_PROD: ${{ secrets.BD_URL_PROD }}
+      DB_USER_PROD: ${{ secrets.DB_USER_PROD }}
+      DB_PASS_PROD: ${{ secrets.DB_PASS_PROD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
