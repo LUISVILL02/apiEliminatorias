@@ -2,8 +2,8 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
-COPY build/libs/my-spring-boot-app.jar /app/my-spring-boot-app.jar
+COPY target/apiEliminatorias-0.0.1-SNAPSHOT.jar /app/apiEliminatorias.jar
 
 EXPOSE 8083
 
-CMD ["java", "-jar", "/app/my-spring-boot-app.jar"]
+CMD ["java", "-jar", "/app/apiEliminatorias.jar"]
