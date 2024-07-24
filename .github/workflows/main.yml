@@ -16,7 +16,7 @@ jobs:
     env:
       DB_URL_PROD: jdbc:postgresql://dpg-cqf839ogph6c73b96o8g-a.ohio-postgres.render.com/eliminatoriasdb
       DB_USER_PROD: luisivill
-      DB_PASS_PROD: JAbTXAOF1h6Nb0t4js0LTLAuRnTsCWjl
+      DB_PASS_PROD: ${{ secrets.DB_PASS_PROD }}
       SECRET_KEY_FUT: mipalabrasecreta
     steps:
       - name: Environment
